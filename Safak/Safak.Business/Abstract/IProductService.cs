@@ -15,5 +15,7 @@ namespace Safak.Business.Abstract
         IResult Delete(Product product);
         IResult Update(Product product);
 
+
+        IResult TransactionOperation(Product product);
     }
 }

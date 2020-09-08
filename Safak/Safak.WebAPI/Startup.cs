@@ -12,6 +12,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using Safak.Core.DependencyResolvers;
+using Safak.Core.Extensions;
+using Safak.Core.Utilities.Ioc;
 using Safak.Core.Utilities.Security.Encyption;
 using Safak.Core.Utilities.Security.Jwt;
 
@@ -51,6 +54,11 @@ namespace Safak.WebAPI
                         IssuerSigningKey = SecurityKeyHelper.CreateSecurityKey(tokenOptions.SecurityKey)
                     };
                 });
+
+            services.addDependencyResolvers(new ICoreModule[]
+            {
+                new CoreModule(),
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

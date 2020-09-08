@@ -14,23 +14,23 @@ namespace Safak.WebAPI.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private IAuthService _authSerice;
+        private IAuthService _authService;
 
         public AuthController(IAuthService authService)
         {
-            _authSerice = authService;
+            _authService = authService;
         }
 
         [HttpPost("login")]
         public ActionResult Login(UserForLoginDto userLoginInfoDto)
         {
-            var userToLogin = _authSerice.Login(userLoginInfoDto);
+            var userToLogin = _authService.Login(userLoginInfoDto);
             if (!userToLogin.Success)
             {
                 return BadRequest(userToLogin.Message);
             }
 
-            var result = _authSerice.CreateAccessToken(userToLogin.Data);
+            var result = _authService.CreateAccessToken(userToLogin.Data);
             if (result.Success)
             {
                 return Ok(result.Data);
@@ -42,14 +42,14 @@ namespace Safak.WebAPI.Controllers
         [HttpPost("register")]
         public ActionResult Register(UserForRegisterDto userForRegisterDto)
         {
-            var userExists = _authSerice.UserExists(userForRegisterDto.Email);
+            var userExists = _authService.UserExists(userForRegisterDto.Email);
             if(!userExists.Success)
             {
                 return BadRequest(userExists.Message);
             }
             //password fazla gitti
-            var registerResult = _authSerice.Register(userForRegisterDto,userForRegisterDto.Password);
-            var result = _authSerice.CreateAccessToken(registerResult.Data);
+            var registerResult = _authService.Register(userForRegisterDto,userForRegisterDto.Password);
+            var result = _authService.CreateAccessToken(registerResult.Data);
             if(result.Success)
             {
                 return Ok(result.Data);

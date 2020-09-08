@@ -1,7 +1,8 @@
-﻿    using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Safak.Business.Abstract;
@@ -21,6 +22,7 @@ namespace Safak.WebAPI.Controllers
         }
 
         [HttpGet(template:"getall")]
+        [Authorize(Roles ="Product.List")]
         public IActionResult GetList()
         {
             var result = _productService.GetList();
@@ -77,6 +79,16 @@ namespace Safak.WebAPI.Controllers
         public IActionResult Update(Product product)
         {
             var result = _productService.Update(product);
+            if (result.Success)
+            {
+                return Ok(result.Message);
+            }
+            return BadRequest(result.Message);
+        }
+        [HttpPost(template: "transaction")]
+        public IActionResult TransactionTest(Product product)
+        {
+            var result = _productService.TransactionOperation(product);
             if (result.Success)
             {
                 return Ok(result.Message);

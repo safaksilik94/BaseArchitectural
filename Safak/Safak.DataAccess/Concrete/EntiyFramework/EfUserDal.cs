@@ -1,11 +1,8 @@
 ﻿using Safak.Core.DataAccess.EntityFramework;
 using Safak.DataAccess.Abstract;
 using Safak.DataAccess.Concrete.EntiyFramework.Context;
-using Safak.Entities.Concrete;
 using System.Linq;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using Safak.Core.Entities.Conrete;
 
 namespace Safak.DataAccess.Concrete.EntiyFramework
